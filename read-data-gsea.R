@@ -1,5 +1,8 @@
-setwd("U:/My Documents/_research/R-working/gsea")
-text_files <- list.files(path = "U:/My Documents/_research/R-working/gsea/gsea-data",               pattern = "*.txt", full.names = TRUE)
+setwd("C:/users/chious/R-working/gsea")
+
+# Read Text file, change file names
+
+text_files <- list.files(path = "C:/users/chious/R-working/gsea/gsea-data", pattern = "*.txt", full.names = TRUE)
 target_folder <- getwd()
 file.copy(text_files, target_folder)
 old_names <- list.files(path = target_folder, pattern = "*.txt", full.names = FALSE)
@@ -11,3 +14,9 @@ file.rename(old_names, new_names)
 object_names <- substr(new_names,1,regexpr(".txt", new_names)-1)
 temp <- lapply(new_names, read.table, sep = "\t", header = FALSE)
 names(temp) <- object_names
+for(i in 1:length(temp)){
+    temp_obj <- object_names[i]
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+    save(temp_obj, file = paste(object_names[i], ".rda", sep = ""))
+}
+file.remove(new_names)
