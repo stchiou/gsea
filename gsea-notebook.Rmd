@@ -32,6 +32,7 @@ file.copy(text_files, target_folder)
 ### Rename Files
 
 + Renamed text files in the working directory so that file names contain only underscore "_" as puntuations.
+
 ```{r}
 old_names <- list.file(path = target_folder, pattern = "*.txt", full.names = FALSE)
 targets <- c(" ", "-", ".txt")
@@ -48,6 +49,7 @@ file.rename(old_names, new_names)
 ### Fix Typo
 
 + The typo was fixed and the chunk was re-run.
+
 ```{r}
 old_names <- list.files(path = target_folder, pattern = "*.txt", full.names = FALSE)
 targets <- c(" ", "-", ".txt")
@@ -60,6 +62,7 @@ file.rename(old_names, new_names)
 ### Create List
 
 + Create a list of object names that will hold the whole text files in the list
+
 ```{r}
 object_names <- substr(new_names,1,regexpr(".txt", new_names)-1)
 temp <- lapply(new_names, read.table, sep = "\t", header = FALSE)
@@ -73,16 +76,11 @@ names(temp) <- list.files(full.names = FALSE)
 ### Adjustment
 
 + The object names were used to assigned to the items in the list.  
+
 ```{r}
 names(temp) <- object_names
-
-```
-
-```{r}
 temp_values <- lapply(new_names, read.table, sep = "\t", header = FALSE, skip = 2)
 names(temp_values) <- object_names
-```
-```{r}
 temp <- lapply(new_names, read.table, sep = "\t", header = FALSE)
 names(temp) <- object_names
 ```
@@ -169,17 +167,40 @@ for(i in 1:length(temp)){
     assign(temp_obj, as.data.frame(temp[i])[-2,])
 }
 ```
-
- + Looks like there is no error after the loop was completed. A total of 149 objects were in the workspace.
++ Looks like there is no error after the loop was completed. A total of 149 objects were in the workspace.
  
-#### Save Data Frame to Disk 
-
-+ A save() statement was included into the loop to save the created data frames to the disk. 
++ Save statement was included into the loop to save the created data frames to the disk
 
 ```{r}
 for(i in 1:length(temp)){
     temp_obj <- object_names[i]
     assign(temp_obj, as.data.frame(temp[i])[-2,])
     save(temp_obj, file = paste(object_names[i], ".rda", sep = ""))
+}
+```
+
+#### Remove Text Files
+
++ Text file in the working directory was removed once the list of objects containing values of the files is created.
+
+```{r}
+file.remove(new_names)
+```
+
+#### Create Object Names for Class File
+
+  + Object names for class files is created by stitching an "_class" to the object names.
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+```
+
+#### Create object for class files
+
+```{r}
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.data.frame(temp[j])[2,])
+    save(class_obj, file = paste(class_names[j], ".cls", sep = ""))
 }
 ```

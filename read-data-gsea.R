@@ -14,9 +14,17 @@ file.rename(old_names, new_names)
 object_names <- substr(new_names,1,regexpr(".txt", new_names)-1)
 temp <- lapply(new_names, read.table, sep = "\t", header = FALSE)
 names(temp) <- object_names
+file.remove(new_names)
 for(i in 1:length(temp)){
     temp_obj <- object_names[i]
     assign(temp_obj, as.data.frame(temp[i])[-2,])
     save(temp_obj, file = paste(object_names[i], ".rda", sep = ""))
 }
-file.remove(new_names)
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.data.frame(temp[j])[2,])
+    
+    save(class_obj, file = paste(class_names[j], ".cls", sep = ""))
+}
+
