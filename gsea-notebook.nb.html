@@ -172,10 +172,22 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<p>7/10/2017</p>
-<ol style="list-style-type: decimal">
+<hr />
+<div id="aim" class="section level1">
+<h1>Aim</h1>
+<ul>
+<li>Import data files in to R objects</li>
+<li>Remove the second line of each file</li>
+<li>Create a GSEA class file from the removed line</li>
+</ul>
+<hr />
+<div id="section" class="section level2">
+<h2>7/10/2017</h2>
+<div id="copy-data-files" class="section level3">
+<h3>Copy Data Files</h3>
+<ul>
 <li>Code to copy text files from data folder into working directory and keep the same file names.</li>
-</ol>
+</ul>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0d2QoXCJVOi9NeSBEb2N1bWVudHMvX3Jlc2VhcmNoL1Itd29ya2luZy9nc2VhXCIpXG50ZXh0X2ZpbGVzIDwtIGxpc3QuZmlsZXMocGF0aCA9IFwiVTovTXkgRG9jdW1lbnRzL19yZXNlYXJjaC9SLXdvcmtpbmcvZ3NlYS9nc2VhLWRhdGFcIiwgXG4gICAgICAgICAgICAgIHBhdHRlcm4gPSBcIioudHh0XCIsIGZ1bGwubmFtZXMgPSBUUlVFKVxudGFyZ2V0X2ZvbGRlciA8LSBnZXR3ZCgpXG5maWxlLmNvcHkodGV4dF9maWxlcywgdGFyZ2V0X2ZvbGRlcilcbmBgYCJ9 -->
@@ -187,11 +199,235 @@ file.copy(text_files, target_folder)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
+</div>
+<div id="rename-files" class="section level3">
+<h3>Rename Files</h3>
+<ul>
+<li>Renamed text files in the working directory so that file names contain only underscore “_&quot; as puntuations.</li>
+</ul>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2xkX25hbWVzIDwtIGxpc3QuZmlsZShwYXRoID0gdGFyZ2V0X2ZvbGRlciwgcGF0dGVybiA9IFwiKi50eHRcIiwgZnVsbC5uYW1lcyA9IEZBTFNFKVxudGFyZ2V0cyA8LSBjKFwiIFwiLCBcIi1cIiwgXCIudHh0XCIpXG5yZXBsYWNlbWVudHMgPC0gYyhcIl9cIiwgXCJfXCIsIFwiXCIpXG50ZW1wX25hbWVzIDwtIGdzdWIodGFyZ2V0c1sxXSwgcmVwbGFjZW1lbnRzWzFdLCBvbGRfbmFtZXMpXG5uZXdfbmFtZXMgPC0gZ3N1Yih0YXJnZXRzWzJdLCByZXBsYWNlbWVudHNbMl0sIHRlbXBfbmFtZXMpXG5maWxlLnJlbmFtZShvbGRfbmFtZXMsIG5ld19uYW1lcylcbmBgYCJ9 -->
+<pre class="r"><code>old_names &lt;- list.file(path = target_folder, pattern = &quot;*.txt&quot;, full.names = FALSE)
+targets &lt;- c(&quot; &quot;, &quot;-&quot;, &quot;.txt&quot;)
+replacements &lt;- c(&quot;_&quot;, &quot;_&quot;, &quot;&quot;)
+temp_names &lt;- gsub(targets[1], replacements[1], old_names)
+new_names &lt;- gsub(targets[2], replacements[2], temp_names)
+file.rename(old_names, new_names)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="cause-of-error" class="section level4">
+<h4>Cause of Error</h4>
+<ul>
+<li>The error was caused by a typo in the list.files() function of which the last character of the function was inadvertantly ommited.</li>
+</ul>
+</div>
+</div>
+<div id="fix-typo" class="section level3">
+<h3>Fix Typo</h3>
+<ul>
+<li>The typo was fixed and the chunk was re-run.</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2xkX25hbWVzIDwtIGxpc3QuZmlsZXMocGF0aCA9IHRhcmdldF9mb2xkZXIsIHBhdHRlcm4gPSBcIioudHh0XCIsIGZ1bGwubmFtZXMgPSBGQUxTRSlcbnRhcmdldHMgPC0gYyhcIiBcIiwgXCItXCIsIFwiLnR4dFwiKVxucmVwbGFjZW1lbnRzIDwtIGMoXCJfXCIsIFwiX1wiLCBcIlwiKVxudGVtcF9uYW1lcyA8LSBnc3ViKHRhcmdldHNbMV0sIHJlcGxhY2VtZW50c1sxXSwgb2xkX25hbWVzKVxubmV3X25hbWVzIDwtIGdzdWIodGFyZ2V0c1syXSwgcmVwbGFjZW1lbnRzWzJdLCB0ZW1wX25hbWVzKVxuZmlsZS5yZW5hbWUob2xkX25hbWVzLCBuZXdfbmFtZXMpXG5gYGAifQ== -->
+<pre class="r"><code>old_names &lt;- list.files(path = target_folder, pattern = &quot;*.txt&quot;, full.names = FALSE)
+targets &lt;- c(&quot; &quot;, &quot;-&quot;, &quot;.txt&quot;)
+replacements &lt;- c(&quot;_&quot;, &quot;_&quot;, &quot;&quot;)
+temp_names &lt;- gsub(targets[1], replacements[1], old_names)
+new_names &lt;- gsub(targets[2], replacements[2], temp_names)
+file.rename(old_names, new_names)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="create-list" class="section level3">
+<h3>Create List</h3>
+<ul>
+<li>Create a list of object names that will hold the whole text files in the list</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub2JqZWN0X25hbWVzIDwtIHN1YnN0cihuZXdfbmFtZXMsMSxyZWdleHByKFwiLnR4dFwiLCBuZXdfbmFtZXMpLTEpXG50ZW1wIDwtIGxhcHBseShuZXdfbmFtZXMsIHJlYWQudGFibGUsIHNlcCA9IFwiXFx0XCIsIGhlYWRlciA9IEZBTFNFKVxubmFtZXModGVtcCkgPC0gbGlzdC5maWxlcyhmdWxsLm5hbWVzID0gRkFMU0UpXG5gYGAifQ== -->
+<pre class="r"><code>object_names &lt;- substr(new_names,1,regexpr(&quot;.txt&quot;, new_names)-1)
+temp &lt;- lapply(new_names, read.table, sep = &quot;\t&quot;, header = FALSE)
+names(temp) &lt;- list.files(full.names = FALSE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="cause-of-warning" class="section level4">
+<h4>Cause of Warning</h4>
+<ul>
+<li>This warning was caused by the inconsistency between the length of the names to be assigned to the items in the list versus the number of the items in the list.</li>
+</ul>
+</div>
+</div>
+<div id="adjustment" class="section level3">
+<h3>Adjustment</h3>
+<ul>
+<li>The object names were used to assigned to the items in the list.</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmFtZXModGVtcCkgPC0gb2JqZWN0X25hbWVzXG5cbmBgYCJ9 -->
+<pre class="r"><code>names(temp) &lt;- object_names
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcF92YWx1ZXMgPC0gbGFwcGx5KG5ld19uYW1lcywgcmVhZC50YWJsZSwgc2VwID0gXCJcXHRcIiwgaGVhZGVyID0gRkFMU0UsIHNraXAgPSAyKVxubmFtZXModGVtcF92YWx1ZXMpIDwtIG9iamVjdF9uYW1lc1xuYGBgIn0= -->
+<pre class="r"><code>temp_values &lt;- lapply(new_names, read.table, sep = &quot;\t&quot;, header = FALSE, skip = 2)
+names(temp_values) &lt;- object_names</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVtcCA8LSBsYXBwbHkobmV3X25hbWVzLCByZWFkLnRhYmxlLCBzZXAgPSBcIlxcdFwiLCBoZWFkZXIgPSBGQUxTRSlcbm5hbWVzKHRlbXApIDwtIG9iamVjdF9uYW1lc1xuYGBgIn0= -->
+<pre class="r"><code>temp &lt;- lapply(new_names, read.table, sep = &quot;\t&quot;, header = FALSE)
+names(temp) &lt;- object_names</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="summary" class="section level3">
+<h3>Summary</h3>
+<div id="acomplished" class="section level4">
+<h4>Acomplished</h4>
+<ol style="list-style-type: decimal">
+<li>File import feature works properly as expected.</li>
+<li>Contents of the data files can be read into the list properly.</li>
+</ol>
+</div>
+<div id="to-do" class="section level4">
+<h4>To Do</h4>
+<ol style="list-style-type: decimal">
+<li>Remove the second row from each object in the list</li>
+<li>Convert objects in the list into individual object.</li>
+<li>Create a Categorical class file (CLS) for each object from the second line that being removed.</li>
+<li>Convert both data files and CLS files into tab-delimited format</li>
+</ol>
+<div id="cls-file-format" class="section level5">
+<h5>CLS File Format</h5>
+<ol style="list-style-type: decimal">
+<li>The first line of a CLS file contains numbers indicating the number of samples and number of classes. The number of samples should correspond to the number of samples in the associated RES or GCT data file.</li>
+</ol>
+<ul>
+<li>Line format: (number of samples) (space) (number of classes) (space) 1</li>
+<li>Example: 58 2 1</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>The second line in a CLS file contains a user-visible name for each class. These are the class names that appear in analysis reports. The line should begin with a pound sign (#) followed by a space.</li>
+</ol>
+<ul>
+<li>Line format: # (space) (class 0 name) (space) (class 1 name)</li>
+<li>Example: # cured fatal/ref</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>The third line contains a class label for each sample. The class label can be the class name, a number, or a text string. The first label used is assigned to the first class named on the second line; the second unique label is assigned to the second class named; and so on. (Note: The order of the labels determines the association of class names and class labels, even if the class labels are the same as the class names.) The number of class labels specified on this line should be the same as the number of samples specified in the first line. The number of unique class labels specified on this line should be the same as the number of classes specified in the first line.</li>
+</ol>
+<ul>
+<li>Line format: (sample 1 class) (space) (sample 2 class) (space) … (sample N class)</li>
+<li>Example: 0 0 0 … 1 1</li>
+</ul>
+</div>
+<div id="example-of-cls-file" class="section level5">
+<h5>Example of CLS File</h5>
+<p>50 2 1<br />
+#MUT WT<br />
+MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT<br />
+MUT MUT MUT MUT MUT MUT MUT MUT MUT WT WT WT WT WT WT WT WT WT WT WT WT WT WT WT WT WT</p>
+<hr />
+</div>
+</div>
+</div>
+</div>
+<div id="section-1" class="section level2">
+<h2>7/11/2017</h2>
+<div id="rerun-code" class="section level3">
+<h3>Rerun Code</h3>
+<ul>
+<li>Rerun code that finished yesterday to create a list that contains objects to hold contents of the tex files.</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0d2QoXCJVOi9NeSBEb2N1bWVudHMvX3Jlc2VhcmNoL1Itd29ya2luZy9nc2VhXCIpXG50ZXh0X2ZpbGVzIDwtIGxpc3QuZmlsZXMocGF0aCA9IFwiVTovTXkgRG9jdW1lbnRzL19yZXNlYXJjaC9SLXdvcmtpbmcvZ3NlYS9nc2VhLWRhdGFcIiwgICAgICAgICAgICAgICBwYXR0ZXJuID0gXCIqLnR4dFwiLCBmdWxsLm5hbWVzID0gVFJVRSlcbnRhcmdldF9mb2xkZXIgPC0gZ2V0d2QoKVxuZmlsZS5jb3B5KHRleHRfZmlsZXMsIHRhcmdldF9mb2xkZXIpXG5vbGRfbmFtZXMgPC0gbGlzdC5maWxlcyhwYXRoID0gdGFyZ2V0X2ZvbGRlciwgcGF0dGVybiA9IFwiKi50eHRcIiwgZnVsbC5uYW1lcyA9IEZBTFNFKVxudGFyZ2V0cyA8LSBjKFwiIFwiLCBcIi1cIiwgXCIudHh0XCIpXG5yZXBsYWNlbWVudHMgPC0gYyhcIl9cIiwgXCJfXCIsIFwiXCIpXG50ZW1wX25hbWVzIDwtIGdzdWIodGFyZ2V0c1sxXSwgcmVwbGFjZW1lbnRzWzFdLCBvbGRfbmFtZXMpXG5uZXdfbmFtZXMgPC0gZ3N1Yih0YXJnZXRzWzJdLCByZXBsYWNlbWVudHNbMl0sIHRlbXBfbmFtZXMpXG5maWxlLnJlbmFtZShvbGRfbmFtZXMsIG5ld19uYW1lcylcbm9iamVjdF9uYW1lcyA8LSBzdWJzdHIobmV3X25hbWVzLDEscmVnZXhwcihcIi50eHRcIiwgbmV3X25hbWVzKS0xKVxudGVtcCA8LSBsYXBwbHkobmV3X25hbWVzLCByZWFkLnRhYmxlLCBzZXAgPSBcIlxcdFwiLCBoZWFkZXIgPSBGQUxTRSlcbm5hbWVzKHRlbXApIDwtIG9iamVjdF9uYW1lc1xuYGBgIn0= -->
+<pre class="r"><code>setwd(&quot;U:/My Documents/_research/R-working/gsea&quot;)
+text_files &lt;- list.files(path = &quot;U:/My Documents/_research/R-working/gsea/gsea-data&quot;,               pattern = &quot;*.txt&quot;, full.names = TRUE)
+target_folder &lt;- getwd()
+file.copy(text_files, target_folder)
+old_names &lt;- list.files(path = target_folder, pattern = &quot;*.txt&quot;, full.names = FALSE)
+targets &lt;- c(&quot; &quot;, &quot;-&quot;, &quot;.txt&quot;)
+replacements &lt;- c(&quot;_&quot;, &quot;_&quot;, &quot;&quot;)
+temp_names &lt;- gsub(targets[1], replacements[1], old_names)
+new_names &lt;- gsub(targets[2], replacements[2], temp_names)
+file.rename(old_names, new_names)
+object_names &lt;- substr(new_names,1,regexpr(&quot;.txt&quot;, new_names)-1)
+temp &lt;- lapply(new_names, read.table, sep = &quot;\t&quot;, header = FALSE)
+names(temp) &lt;- object_names</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="convert-list-into-data-frame" class="section level3">
+<h3>Convert list into Data Frame</h3>
+<div id="first-attempt" class="section level4">
+<h4>First attempt</h4>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGkgaW4gMTpsZW5ndGgodGVtcCkpe1xuICAgIHRlbXBfb2JqIDwtIG9iamVjdF9uYW1lc1xuICAgIGFzc2lnbih0ZW1wX29iaiwgYXMuZGF0YS5mcmFtZSh0ZW1wW2ldKVstMixdKVxufVxuYGBgIn0= -->
+<pre class="r"><code>for(i in 1:length(temp)){
+    temp_obj &lt;- object_names
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="cause-of-error-1" class="section level5">
+<h5>Cause of Error</h5>
+<ul>
+<li>The names of the objects were not looped through. Only the first object was named properly.</li>
+</ul>
+</div>
+</div>
+<div id="second-attemp" class="section level4">
+<h4>Second Attemp</h4>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGkgaW4gMTpsZW5ndGgodGVtcCkpe1xuICAgIHRlbXBfb2JqIDwtIG9iamVjdF9uYW1lc1tpXVxuICAgIGFzc2lnbih0ZW1wX29iaiwgYXMuZGF0YS5mcmFtZSh0ZW1wW2ldKVstMixdKVxufVxuYGBgIn0= -->
+<pre class="r"><code>for(i in 1:length(temp)){
+    temp_obj &lt;- object_names[i]
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Looks like there is no error after the loop was completed. A total of 149 objects were in the workspace.</li>
+</ul>
+</div>
+<div id="save-data-frame-to-disk" class="section level4">
+<h4>Save Data Frame to Disk</h4>
+<ul>
+<li>A save() statement was included into the loop to save the created data frames to the disk.</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGkgaW4gMTpsZW5ndGgodGVtcCkpe1xuICAgIHRlbXBfb2JqIDwtIG9iamVjdF9uYW1lc1tpXVxuICAgIGFzc2lnbih0ZW1wX29iaiwgYXMuZGF0YS5mcmFtZSh0ZW1wW2ldKVstMixdKVxuICAgIHNhdmUodGVtcF9vYmosIGZpbGUgPSBwYXN0ZShvYmplY3RfbmFtZXNbaV0sIFwiLnJkYVwiLCBzZXAgPSBcIlwiKSlcbn1cbmBgYCJ9 -->
+<pre class="r"><code>for(i in 1:length(temp)){
+    temp_obj &lt;- object_names[i]
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+    save(temp_obj, file = paste(object_names[i], &quot;.rda&quot;, sep = &quot;&quot;))
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+</div>
+</div>
+</div>
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2sgZm9yIEdTRUEgUHJvamVjdCINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQo3LzEwLzIwMTcNCg0KMS4gQ29kZSB0byBjb3B5IHRleHQgZmlsZXMgZnJvbSBkYXRhIGZvbGRlciBpbnRvIHdvcmtpbmcgZGlyZWN0b3J5IGFuZCBrZWVwIHRoZSBzYW1lIGZpbGUgbmFtZXMuDQpgYGB7cn0NCnNldHdkKCJVOi9NeSBEb2N1bWVudHMvX3Jlc2VhcmNoL1Itd29ya2luZy9nc2VhIikNCnRleHRfZmlsZXMgPC0gbGlzdC5maWxlcyhwYXRoID0gIlU6L015IERvY3VtZW50cy9fcmVzZWFyY2gvUi13b3JraW5nL2dzZWEvZ3NlYS1kYXRhIiwgDQogICAgICAgICAgICAgIHBhdHRlcm4gPSAiKi50eHQiLCBmdWxsLm5hbWVzID0gVFJVRSkNCnRhcmdldF9mb2xkZXIgPC0gZ2V0d2QoKQ0KZmlsZS5jb3B5KHRleHRfZmlsZXMsIHRhcmdldF9mb2xkZXIpDQpgYGANCg0KQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkN0cmwrQWx0K0kqLg0KDQpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4NCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2sgZm9yIEdTRUEgUHJvamVjdCINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCg0KKioqDQoNCiMgQWltDQoNCisgSW1wb3J0IGRhdGEgZmlsZXMgaW4gdG8gUiBvYmplY3RzDQorIFJlbW92ZSB0aGUgc2Vjb25kIGxpbmUgb2YgZWFjaCBmaWxlDQorIENyZWF0ZSBhIEdTRUEgY2xhc3MgZmlsZSBmcm9tIHRoZSByZW1vdmVkIGxpbmUNCg0KKioqDQoNCiMjIDcvMTAvMjAxNw0KDQojIyMgQ29weSBEYXRhIEZpbGVzDQoNCisgQ29kZSB0byBjb3B5IHRleHQgZmlsZXMgZnJvbSBkYXRhIGZvbGRlciBpbnRvIHdvcmtpbmcgZGlyZWN0b3J5IGFuZCBrZWVwIHRoZSBzYW1lIGZpbGUgbmFtZXMuDQoNCmBgYHtyfQ0Kc2V0d2QoIlU6L015IERvY3VtZW50cy9fcmVzZWFyY2gvUi13b3JraW5nL2dzZWEiKQ0KdGV4dF9maWxlcyA8LSBsaXN0LmZpbGVzKHBhdGggPSAiVTovTXkgRG9jdW1lbnRzL19yZXNlYXJjaC9SLXdvcmtpbmcvZ3NlYS9nc2VhLWRhdGEiLCANCiAgICAgICAgICAgICAgcGF0dGVybiA9ICIqLnR4dCIsIGZ1bGwubmFtZXMgPSBUUlVFKQ0KdGFyZ2V0X2ZvbGRlciA8LSBnZXR3ZCgpDQpmaWxlLmNvcHkodGV4dF9maWxlcywgdGFyZ2V0X2ZvbGRlcikNCmBgYA0KDQoNCiMjIyBSZW5hbWUgRmlsZXMNCg0KKyBSZW5hbWVkIHRleHQgZmlsZXMgaW4gdGhlIHdvcmtpbmcgZGlyZWN0b3J5IHNvIHRoYXQgZmlsZSBuYW1lcyBjb250YWluIG9ubHkgdW5kZXJzY29yZSAiXyIgYXMgcHVudHVhdGlvbnMuDQpgYGB7cn0NCm9sZF9uYW1lcyA8LSBsaXN0LmZpbGUocGF0aCA9IHRhcmdldF9mb2xkZXIsIHBhdHRlcm4gPSAiKi50eHQiLCBmdWxsLm5hbWVzID0gRkFMU0UpDQp0YXJnZXRzIDwtIGMoIiAiLCAiLSIsICIudHh0IikNCnJlcGxhY2VtZW50cyA8LSBjKCJfIiwgIl8iLCAiIikNCnRlbXBfbmFtZXMgPC0gZ3N1Yih0YXJnZXRzWzFdLCByZXBsYWNlbWVudHNbMV0sIG9sZF9uYW1lcykNCm5ld19uYW1lcyA8LSBnc3ViKHRhcmdldHNbMl0sIHJlcGxhY2VtZW50c1syXSwgdGVtcF9uYW1lcykNCmZpbGUucmVuYW1lKG9sZF9uYW1lcywgbmV3X25hbWVzKQ0KYGBgDQoNCiMjIyMgQ2F1c2Ugb2YgRXJyb3INCg0KKyBUaGUgZXJyb3Igd2FzIGNhdXNlZCBieSBhIHR5cG8gaW4gdGhlIGxpc3QuZmlsZXMoKSBmdW5jdGlvbiBvZiB3aGljaCB0aGUgbGFzdCBjaGFyYWN0ZXIgb2YgdGhlIGZ1bmN0aW9uIHdhcyBpbmFkdmVydGFudGx5IG9tbWl0ZWQuDQoNCiMjIyBGaXggVHlwbw0KDQorIFRoZSB0eXBvIHdhcyBmaXhlZCBhbmQgdGhlIGNodW5rIHdhcyByZS1ydW4uDQpgYGB7cn0NCm9sZF9uYW1lcyA8LSBsaXN0LmZpbGVzKHBhdGggPSB0YXJnZXRfZm9sZGVyLCBwYXR0ZXJuID0gIioudHh0IiwgZnVsbC5uYW1lcyA9IEZBTFNFKQ0KdGFyZ2V0cyA8LSBjKCIgIiwgIi0iLCAiLnR4dCIpDQpyZXBsYWNlbWVudHMgPC0gYygiXyIsICJfIiwgIiIpDQp0ZW1wX25hbWVzIDwtIGdzdWIodGFyZ2V0c1sxXSwgcmVwbGFjZW1lbnRzWzFdLCBvbGRfbmFtZXMpDQpuZXdfbmFtZXMgPC0gZ3N1Yih0YXJnZXRzWzJdLCByZXBsYWNlbWVudHNbMl0sIHRlbXBfbmFtZXMpDQpmaWxlLnJlbmFtZShvbGRfbmFtZXMsIG5ld19uYW1lcykNCmBgYA0KDQojIyMgQ3JlYXRlIExpc3QNCg0KKyBDcmVhdGUgYSBsaXN0IG9mIG9iamVjdCBuYW1lcyB0aGF0IHdpbGwgaG9sZCB0aGUgd2hvbGUgdGV4dCBmaWxlcyBpbiB0aGUgbGlzdA0KYGBge3J9DQpvYmplY3RfbmFtZXMgPC0gc3Vic3RyKG5ld19uYW1lcywxLHJlZ2V4cHIoIi50eHQiLCBuZXdfbmFtZXMpLTEpDQp0ZW1wIDwtIGxhcHBseShuZXdfbmFtZXMsIHJlYWQudGFibGUsIHNlcCA9ICJcdCIsIGhlYWRlciA9IEZBTFNFKQ0KbmFtZXModGVtcCkgPC0gbGlzdC5maWxlcyhmdWxsLm5hbWVzID0gRkFMU0UpDQpgYGANCg0KIyMjIyBDYXVzZSBvZiBXYXJuaW5nDQoNCisgVGhpcyB3YXJuaW5nIHdhcyBjYXVzZWQgYnkgdGhlIGluY29uc2lzdGVuY3kgYmV0d2VlbiB0aGUgbGVuZ3RoIG9mIHRoZSBuYW1lcyB0byBiZSBhc3NpZ25lZCB0byB0aGUgaXRlbXMgaW4gdGhlIGxpc3QgdmVyc3VzIHRoZSBudW1iZXIgb2YgdGhlIGl0ZW1zIGluIHRoZSBsaXN0Lg0KDQojIyMgQWRqdXN0bWVudA0KDQorIFRoZSBvYmplY3QgbmFtZXMgd2VyZSB1c2VkIHRvIGFzc2lnbmVkIHRvIHRoZSBpdGVtcyBpbiB0aGUgbGlzdC4gIA0KYGBge3J9DQpuYW1lcyh0ZW1wKSA8LSBvYmplY3RfbmFtZXMNCg0KYGBgDQoNCmBgYHtyfQ0KdGVtcF92YWx1ZXMgPC0gbGFwcGx5KG5ld19uYW1lcywgcmVhZC50YWJsZSwgc2VwID0gIlx0IiwgaGVhZGVyID0gRkFMU0UsIHNraXAgPSAyKQ0KbmFtZXModGVtcF92YWx1ZXMpIDwtIG9iamVjdF9uYW1lcw0KYGBgDQpgYGB7cn0NCnRlbXAgPC0gbGFwcGx5KG5ld19uYW1lcywgcmVhZC50YWJsZSwgc2VwID0gIlx0IiwgaGVhZGVyID0gRkFMU0UpDQpuYW1lcyh0ZW1wKSA8LSBvYmplY3RfbmFtZXMNCmBgYA0KDQojIyMgU3VtbWFyeQ0KDQojIyMjIEFjb21wbGlzaGVkDQoNCjEuIEZpbGUgaW1wb3J0IGZlYXR1cmUgd29ya3MgcHJvcGVybHkgYXMgZXhwZWN0ZWQuDQoyLiBDb250ZW50cyBvZiB0aGUgZGF0YSBmaWxlcyBjYW4gYmUgcmVhZCBpbnRvIHRoZSBsaXN0IHByb3Blcmx5Lg0KDQojIyMjIFRvIERvDQoNCjEuIFJlbW92ZSB0aGUgc2Vjb25kIHJvdyBmcm9tIGVhY2ggb2JqZWN0IGluIHRoZSBsaXN0DQoyLiBDb252ZXJ0IG9iamVjdHMgaW4gdGhlIGxpc3QgaW50byBpbmRpdmlkdWFsIG9iamVjdC4NCjMuIENyZWF0ZSBhIENhdGVnb3JpY2FsIGNsYXNzIGZpbGUgKENMUykgZm9yIGVhY2ggb2JqZWN0IGZyb20gdGhlIHNlY29uZCBsaW5lIHRoYXQgYmVpbmcgcmVtb3ZlZC4NCjQuIENvbnZlcnQgYm90aCBkYXRhIGZpbGVzIGFuZCBDTFMgZmlsZXMgaW50byB0YWItZGVsaW1pdGVkIGZvcm1hdA0KDQojIyMjIyBDTFMgRmlsZSBGb3JtYXQNCiAxLiBUaGUgZmlyc3QgbGluZSBvZiBhIENMUyBmaWxlIGNvbnRhaW5zIG51bWJlcnMgaW5kaWNhdGluZyB0aGUgbnVtYmVyIG9mIHNhbXBsZXMgYW5kIG51bWJlciBvZiBjbGFzc2VzLiBUaGUgbnVtYmVyIG9mIHNhbXBsZXMgc2hvdWxkIGNvcnJlc3BvbmQgdG8gdGhlIG51bWJlciBvZiBzYW1wbGVzIGluIHRoZSBhc3NvY2lhdGVkIFJFUyBvciBHQ1QgZGF0YSBmaWxlLg0KDQorIExpbmUgZm9ybWF0OiAgICAgIChudW1iZXIgb2Ygc2FtcGxlcykgKHNwYWNlKSAobnVtYmVyIG9mIGNsYXNzZXMpIChzcGFjZSkgMQ0KKyBFeGFtcGxlOiAgICAgICAgICA1OCAyIDENCg0KIDIuIFRoZSBzZWNvbmQgbGluZSBpbiBhIENMUyBmaWxlIGNvbnRhaW5zIGEgdXNlci12aXNpYmxlIG5hbWUgZm9yIGVhY2ggY2xhc3MuIFRoZXNlIGFyZSB0aGUgY2xhc3MgbmFtZXMgdGhhdCBhcHBlYXIgaW4gYW5hbHlzaXMgcmVwb3J0cy4gVGhlIGxpbmUgc2hvdWxkIGJlZ2luIHdpdGggYSBwb3VuZCBzaWduICgjKSBmb2xsb3dlZCBieSBhIHNwYWNlLg0KDQorIExpbmUgZm9ybWF0OiAgICAgICMgKHNwYWNlKSAoY2xhc3MgMCBuYW1lKSAoc3BhY2UpIChjbGFzcyAxIG5hbWUpDQorIEV4YW1wbGU6ICAgICMgY3VyZWQgZmF0YWwvcmVmDQoNCiAzLiBUaGUgdGhpcmQgbGluZSBjb250YWlucyBhIGNsYXNzIGxhYmVsIGZvciBlYWNoIHNhbXBsZS4gVGhlIGNsYXNzIGxhYmVsIGNhbiBiZSB0aGUgY2xhc3MgbmFtZSwgYSBudW1iZXIsIG9yIGEgdGV4dCBzdHJpbmcuIFRoZSBmaXJzdCBsYWJlbCB1c2VkIGlzIGFzc2lnbmVkIHRvIHRoZSBmaXJzdCBjbGFzcyBuYW1lZCBvbiB0aGUgc2Vjb25kIGxpbmU7IHRoZSBzZWNvbmQgdW5pcXVlIGxhYmVsIGlzIGFzc2lnbmVkIHRvIHRoZSBzZWNvbmQgY2xhc3MgbmFtZWQ7IGFuZCBzbyBvbi4gKE5vdGU6IFRoZSBvcmRlciBvZiB0aGUgbGFiZWxzIGRldGVybWluZXMgdGhlIGFzc29jaWF0aW9uIG9mIGNsYXNzIG5hbWVzIGFuZCBjbGFzcyBsYWJlbHMsIGV2ZW4gaWYgdGhlIGNsYXNzIGxhYmVscyBhcmUgdGhlIHNhbWUgYXMgdGhlIGNsYXNzIG5hbWVzLikgVGhlIG51bWJlciBvZiBjbGFzcyBsYWJlbHMgc3BlY2lmaWVkIG9uIHRoaXMgbGluZSBzaG91bGQgYmUgdGhlIHNhbWUgYXMgdGhlIG51bWJlciBvZiBzYW1wbGVzIHNwZWNpZmllZCBpbiB0aGUgZmlyc3QgbGluZS4gVGhlIG51bWJlciBvZiB1bmlxdWUgY2xhc3MgbGFiZWxzIHNwZWNpZmllZCBvbiB0aGlzIGxpbmUgc2hvdWxkIGJlIHRoZSBzYW1lIGFzIHRoZSBudW1iZXIgb2YgY2xhc3NlcyBzcGVjaWZpZWQgaW4gdGhlIGZpcnN0IGxpbmUuDQoNCisgTGluZSBmb3JtYXQ6ICAgICAgKHNhbXBsZSAxIGNsYXNzKSAoc3BhY2UpIChzYW1wbGUgMiBjbGFzcykgKHNwYWNlKSAuLi4gKHNhbXBsZSBOIGNsYXNzKQ0KKyBFeGFtcGxlOiAgICAwIDAgMCAuLi4gMSAxDQoNCiMjIyMjIEV4YW1wbGUgb2YgQ0xTIEZpbGUNCjUwIDIgMSAgDQojTVVUIFdUICANCk1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUICAgDQpNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBNVVQgTVVUIE1VVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVCBXVA0KDQoqKioNCg0KIyMgNy8xMS8yMDE3DQoNCiMjIyBSZXJ1biBDb2RlDQoNCisgUmVydW4gY29kZSB0aGF0IGZpbmlzaGVkIHllc3RlcmRheSB0byBjcmVhdGUgYSBsaXN0IHRoYXQgY29udGFpbnMgb2JqZWN0cyB0byBob2xkIGNvbnRlbnRzIG9mIHRoZSB0ZXggZmlsZXMuDQoNCmBgYHtyfQ0Kc2V0d2QoIlU6L015IERvY3VtZW50cy9fcmVzZWFyY2gvUi13b3JraW5nL2dzZWEiKQ0KdGV4dF9maWxlcyA8LSBsaXN0LmZpbGVzKHBhdGggPSAiVTovTXkgRG9jdW1lbnRzL19yZXNlYXJjaC9SLXdvcmtpbmcvZ3NlYS9nc2VhLWRhdGEiLCAgICAgICAgICAgICAgIHBhdHRlcm4gPSAiKi50eHQiLCBmdWxsLm5hbWVzID0gVFJVRSkNCnRhcmdldF9mb2xkZXIgPC0gZ2V0d2QoKQ0KZmlsZS5jb3B5KHRleHRfZmlsZXMsIHRhcmdldF9mb2xkZXIpDQpvbGRfbmFtZXMgPC0gbGlzdC5maWxlcyhwYXRoID0gdGFyZ2V0X2ZvbGRlciwgcGF0dGVybiA9ICIqLnR4dCIsIGZ1bGwubmFtZXMgPSBGQUxTRSkNCnRhcmdldHMgPC0gYygiICIsICItIiwgIi50eHQiKQ0KcmVwbGFjZW1lbnRzIDwtIGMoIl8iLCAiXyIsICIiKQ0KdGVtcF9uYW1lcyA8LSBnc3ViKHRhcmdldHNbMV0sIHJlcGxhY2VtZW50c1sxXSwgb2xkX25hbWVzKQ0KbmV3X25hbWVzIDwtIGdzdWIodGFyZ2V0c1syXSwgcmVwbGFjZW1lbnRzWzJdLCB0ZW1wX25hbWVzKQ0KZmlsZS5yZW5hbWUob2xkX25hbWVzLCBuZXdfbmFtZXMpDQpvYmplY3RfbmFtZXMgPC0gc3Vic3RyKG5ld19uYW1lcywxLHJlZ2V4cHIoIi50eHQiLCBuZXdfbmFtZXMpLTEpDQp0ZW1wIDwtIGxhcHBseShuZXdfbmFtZXMsIHJlYWQudGFibGUsIHNlcCA9ICJcdCIsIGhlYWRlciA9IEZBTFNFKQ0KbmFtZXModGVtcCkgPC0gb2JqZWN0X25hbWVzDQpgYGANCg0KIyMjIENvbnZlcnQgbGlzdCBpbnRvIERhdGEgRnJhbWUNCg0KIyMjIyBGaXJzdCBhdHRlbXB0DQpgYGB7cn0NCmZvcihpIGluIDE6bGVuZ3RoKHRlbXApKXsNCiAgICB0ZW1wX29iaiA8LSBvYmplY3RfbmFtZXMNCiAgICBhc3NpZ24odGVtcF9vYmosIGFzLmRhdGEuZnJhbWUodGVtcFtpXSlbLTIsXSkNCn0NCmBgYA0KDQojIyMjIyBDYXVzZSBvZiBFcnJvcg0KDQorIFRoZSBuYW1lcyBvZiB0aGUgb2JqZWN0cyB3ZXJlIG5vdCBsb29wZWQgdGhyb3VnaC4gT25seSB0aGUgZmlyc3Qgb2JqZWN0IHdhcyBuYW1lZCBwcm9wZXJseS4NCg0KIyMjIyBTZWNvbmQgQXR0ZW1wDQoNCmBgYHtyfQ0KZm9yKGkgaW4gMTpsZW5ndGgodGVtcCkpew0KICAgIHRlbXBfb2JqIDwtIG9iamVjdF9uYW1lc1tpXQ0KICAgIGFzc2lnbih0ZW1wX29iaiwgYXMuZGF0YS5mcmFtZSh0ZW1wW2ldKVstMixdKQ0KfQ0KYGBgDQoNCiArIExvb2tzIGxpa2UgdGhlcmUgaXMgbm8gZXJyb3IgYWZ0ZXIgdGhlIGxvb3Agd2FzIGNvbXBsZXRlZC4gQSB0b3RhbCBvZiAxNDkgb2JqZWN0cyB3ZXJlIGluIHRoZSB3b3Jrc3BhY2UuDQogDQojIyMjIFNhdmUgRGF0YSBGcmFtZSB0byBEaXNrIA0KDQorIEEgc2F2ZSgpIHN0YXRlbWVudCB3YXMgaW5jbHVkZWQgaW50byB0aGUgbG9vcCB0byBzYXZlIHRoZSBjcmVhdGVkIGRhdGEgZnJhbWVzIHRvIHRoZSBkaXNrLiANCg0KYGBge3J9DQpmb3IoaSBpbiAxOmxlbmd0aCh0ZW1wKSl7DQogICAgdGVtcF9vYmogPC0gb2JqZWN0X25hbWVzW2ldDQogICAgYXNzaWduKHRlbXBfb2JqLCBhcy5kYXRhLmZyYW1lKHRlbXBbaV0pWy0yLF0pDQogICAgc2F2ZSh0ZW1wX29iaiwgZmlsZSA9IHBhc3RlKG9iamVjdF9uYW1lc1tpXSwgIi5yZGEiLCBzZXAgPSAiIikpDQp9DQpgYGANCg==</div>
 
 
 
