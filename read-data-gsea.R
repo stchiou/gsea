@@ -23,9 +23,6 @@ for(i in 1:length(temp)){
 }
 class_names <- paste(object_names, "_class", sep = "")
 for(j in 1:length(temp)){
-    class_obj <- class_names[j]
-    assign(class_obj, as.data.frame(temp[j])[2,])
-    
-    save(class_obj, file = paste(class_names[j], ".cls", sep = ""))
+  class_obj <- class_names[j]
+  assign(class_obj, as.vector(as.data.frame(temp[j])[2,-1]))
 }
-

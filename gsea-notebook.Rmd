@@ -208,7 +208,10 @@ for(j in 1:length(temp)){
 ### Summary
 
 + Objects were successfully created from the list that holds raw data files.
-+ 
++ The class object was extracted from raw data files correctly. However, they remain as factor class. An extra steps would be needed to convert it into manipulatable format.
+
+***
+
 ## 7/12/2017
 
 ### Save object to text file
@@ -226,7 +229,7 @@ for(i in 1:length(temp)){
 
 #### Second attempt
 
-
++ A get() function was added for the object to be written in write.table()
 ```{r}
 for(i in 1:length(temp)){
     temp_obj <- object_names[i]
@@ -234,5 +237,95 @@ for(i in 1:length(temp)){
     save(temp_obj, file = paste(object_names[i], ".rda", sep = ""))
     write.table(get(temp_obj), file = paste(object_names[i], ".txt", sep = ""), sep = "\t", row.names = FALSE, col.names = FALSE)
 }
+```
+
+### Dealing with class file (CLS)
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.data.frame(temp[j])[2,])
+}
+aflatoxin_B1_2d_run1_plate1_class
+```
+
++ The object was extracted properly. However, the first column is not needed. The loop needs to be revised.
+
+#### Revised loop-1
++ Exclude the first column. object j and class objects were removed from the console prior to run the following chunk.
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.data.frame(temp[j])[2,-1])
+}
+aflatoxin_B1_2d_run1_plate1_class
+```
+
+
+#### Revised loop-2
+
++ Convert object to character list
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.list(as.data.frame(temp[j])[2,-1]))
+}
+aflatoxin_B1_2d_run1_plate1_class
+```
+
+
+#### Revised loop-3
+
++ Convert to character
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.character(as.data.frame(temp[j])[2,-1]))
+}
+aflatoxin_B1_2d_run1_plate1_class
+```
++ close, but not quite.
+
+#### Revised loop-4
+
++ covert to numeric
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.numeric(as.data.frame(temp[j])[2,-1]))
+}
+aflatoxin_B1_2d_run1_plate1_class
+```
++ The values are not correct.
+
+#### Revised loop-5
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.character(temp[j])[2,-1])
+}
+aflatoxin_B1_2d_run1_plate1_class
+```
+
+#### Revised loop-6
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.vector(as.data.frame(temp[j])[2,-1]))
+}
+aflatoxin_B1_2d_run1_plate1_class
+
 ```
 
