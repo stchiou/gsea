@@ -21,7 +21,7 @@ output: html_notebook
 + Code to copy text files from data folder into working directory and keep the same file names.
 
 ```{r}
-setwd("U:/My Documents/_research/R-working/gsea")
+setwd("C:/users/chious/R-working/gsea")
 text_files <- list.files(path = "U:/My Documents/_research/R-working/gsea/gsea-data", 
               pattern = "*.txt", full.names = TRUE)
 target_folder <- getwd()
@@ -204,3 +204,20 @@ for(j in 1:length(temp)){
     save(class_obj, file = paste(class_names[j], ".cls", sep = ""))
 }
 ```
+
+### Summary
+
+## 7/12/2017
+
+### Save object to text file
+
+```{r}
+file.remove(new_names)
+for(i in 1:length(temp)){
+    temp_obj <- object_names[i]
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+    save(temp_obj, file = paste(object_names[i], ".rda", sep = ""))
+    write.table(temp_obj, file = paste(object_names[i], ".txt", sep = ""), sep = "\t", row.names = FALSE, col.names = FALSE)
+}
+```
+
