@@ -1,0 +1,206 @@
+---
+title: "R Notebook for GSEA Project"
+output: html_notebook
+---
+
+
+***
+
+# Aim
+
++ Import data files in to R objects
++ Remove the second line of each file
++ Create a GSEA class file from the removed line
+
+***
+
+## 7/10/2017
+
+### Copy Data Files
+
++ Code to copy text files from data folder into working directory and keep the same file names.
+
+```{r}
+setwd("U:/My Documents/_research/R-working/gsea")
+text_files <- list.files(path = "U:/My Documents/_research/R-working/gsea/gsea-data", 
+              pattern = "*.txt", full.names = TRUE)
+target_folder <- getwd()
+file.copy(text_files, target_folder)
+```
+
+
+### Rename Files
+
++ Renamed text files in the working directory so that file names contain only underscore "_" as puntuations.
+
+```{r}
+old_names <- list.file(path = target_folder, pattern = "*.txt", full.names = FALSE)
+targets <- c(" ", "-", ".txt")
+replacements <- c("_", "_", "")
+temp_names <- gsub(targets[1], replacements[1], old_names)
+new_names <- gsub(targets[2], replacements[2], temp_names)
+file.rename(old_names, new_names)
+```
+
+#### Cause of Error
+
++ The error was caused by a typo in the list.files() function of which the last character of the function was inadvertantly ommited.
+
+### Fix Typo
+
++ The typo was fixed and the chunk was re-run.
+
+```{r}
+old_names <- list.files(path = target_folder, pattern = "*.txt", full.names = FALSE)
+targets <- c(" ", "-", ".txt")
+replacements <- c("_", "_", "")
+temp_names <- gsub(targets[1], replacements[1], old_names)
+new_names <- gsub(targets[2], replacements[2], temp_names)
+file.rename(old_names, new_names)
+```
+
+### Create List
+
++ Create a list of object names that will hold the whole text files in the list
+
+```{r}
+object_names <- substr(new_names,1,regexpr(".txt", new_names)-1)
+temp <- lapply(new_names, read.table, sep = "\t", header = FALSE)
+names(temp) <- list.files(full.names = FALSE)
+```
+
+#### Cause of Warning
+
++ This warning was caused by the inconsistency between the length of the names to be assigned to the items in the list versus the number of the items in the list.
+
+### Adjustment
+
++ The object names were used to assigned to the items in the list.  
+
+```{r}
+names(temp) <- object_names
+temp_values <- lapply(new_names, read.table, sep = "\t", header = FALSE, skip = 2)
+names(temp_values) <- object_names
+temp <- lapply(new_names, read.table, sep = "\t", header = FALSE)
+names(temp) <- object_names
+```
+
+### Summary
+
+#### Acomplished
+
+1. File import feature works properly as expected.
+2. Contents of the data files can be read into the list properly.
+
+#### To Do
+
+1. Remove the second row from each object in the list
+2. Convert objects in the list into individual object.
+3. Create a Categorical class file (CLS) for each object from the second line that being removed.
+4. Convert both data files and CLS files into tab-delimited format
+
+##### CLS File Format
+ 1. The first line of a CLS file contains numbers indicating the number of samples and number of classes. The number of samples should correspond to the number of samples in the associated RES or GCT data file.
+
++ Line format:      (number of samples) (space) (number of classes) (space) 1
++ Example:          58 2 1
+
+ 2. The second line in a CLS file contains a user-visible name for each class. These are the class names that appear in analysis reports. The line should begin with a pound sign (#) followed by a space.
+
++ Line format:      # (space) (class 0 name) (space) (class 1 name)
++ Example:    # cured fatal/ref
+
+ 3. The third line contains a class label for each sample. The class label can be the class name, a number, or a text string. The first label used is assigned to the first class named on the second line; the second unique label is assigned to the second class named; and so on. (Note: The order of the labels determines the association of class names and class labels, even if the class labels are the same as the class names.) The number of class labels specified on this line should be the same as the number of samples specified in the first line. The number of unique class labels specified on this line should be the same as the number of classes specified in the first line.
+
++ Line format:      (sample 1 class) (space) (sample 2 class) (space) ... (sample N class)
++ Example:    0 0 0 ... 1 1
+
+##### Example of CLS File
+50 2 1  
+#MUT WT  
+MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT MUT   
+MUT MUT MUT MUT MUT MUT MUT MUT MUT WT WT WT WT WT WT WT WT WT WT WT WT WT WT WT WT WT
+
+***
+
+## 7/11/2017
+
+### Rerun Code
+
++ Rerun code that finished yesterday to create a list that contains objects to hold contents of the tex files.
+
+```{r}
+setwd("U:/My Documents/_research/R-working/gsea")
+text_files <- list.files(path = "U:/My Documents/_research/R-working/gsea/gsea-data",               pattern = "*.txt", full.names = TRUE)
+target_folder <- getwd()
+file.copy(text_files, target_folder)
+old_names <- list.files(path = target_folder, pattern = "*.txt", full.names = FALSE)
+targets <- c(" ", "-", ".txt")
+replacements <- c("_", "_", "")
+temp_names <- gsub(targets[1], replacements[1], old_names)
+new_names <- gsub(targets[2], replacements[2], temp_names)
+file.rename(old_names, new_names)
+object_names <- substr(new_names,1,regexpr(".txt", new_names)-1)
+temp <- lapply(new_names, read.table, sep = "\t", header = FALSE)
+names(temp) <- object_names
+```
+
+### Convert list into Data Frame
+
+#### First attempt
+```{r}
+for(i in 1:length(temp)){
+    temp_obj <- object_names
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+}
+```
+
+##### Cause of Error
+
++ The names of the objects were not looped through. Only the first object was named properly.
+
+#### Second Attemp
+
+```{r}
+for(i in 1:length(temp)){
+    temp_obj <- object_names[i]
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+}
+```
++ Looks like there is no error after the loop was completed. A total of 149 objects were in the workspace.
+ 
++ Save statement was included into the loop to save the created data frames to the disk
+
+```{r}
+for(i in 1:length(temp)){
+    temp_obj <- object_names[i]
+    assign(temp_obj, as.data.frame(temp[i])[-2,])
+    save(temp_obj, file = paste(object_names[i], ".rda", sep = ""))
+}
+```
+
+#### Remove Text Files
+
++ Text file in the working directory was removed once the list of objects containing values of the files is created.
+
+```{r}
+file.remove(new_names)
+```
+
+#### Create Object Names for Class File
+
+  + Object names for class files is created by stitching an "_class" to the object names.
+
+```{r}
+class_names <- paste(object_names, "_class", sep = "")
+```
+
+#### Create object for class files
+
+```{r}
+for(j in 1:length(temp)){
+    class_obj <- class_names[j]
+    assign(class_obj, as.data.frame(temp[j])[2,])
+    save(class_obj, file = paste(class_names[j], ".cls", sep = ""))
+}
+```
