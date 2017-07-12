@@ -438,17 +438,13 @@ names(temp) &lt;- object_names</code></pre>
 <h4>Create object for class files</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGogaW4gMTpsZW5ndGgodGVtcCkpe1xuICAgIGNsYXNzX29iaiA8LSBjbGFzc19uYW1lc1tqXVxuICAgIGFzc2lnbihjbGFzc19vYmosIGFzLmRhdGEuZnJhbWUodGVtcFtqXSlbMixdKVxuICAgIHNhdmUoY2xhc3Nfb2JqLCBmaWxlID0gcGFzdGUoY2xhc3NfbmFtZXNbal0sIFwiLmNsc1wiLCBzZXAgPSBcIlwiKSlcbn1cblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGogaW4gMTpsZW5ndGgodGVtcCkpe1xuICAgIGNsYXNzX29iaiA8LSBjbGFzc19uYW1lc1tqXVxuICAgIGFzc2lnbihjbGFzc19vYmosIGFzLmRhdGEuZnJhbWUodGVtcFtqXSlbMixdKVxuICAgIHNhdmUoY2xhc3Nfb2JqLCBmaWxlID0gcGFzdGUoY2xhc3NfbmFtZXNbal0sIFwiLmNsc1wiLCBzZXAgPSBcIlwiKSlcbn1cbmBgYCJ9 -->
 <pre class="r"><code>for(j in 1:length(temp)){
     class_obj &lt;- class_names[j]
     assign(class_obj, as.data.frame(temp[j])[2,])
     save(class_obj, file = paste(class_names[j], &quot;.cls&quot;, sep = &quot;&quot;))
-}
-</code></pre>
+}</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiVGhlcmUgd2VyZSAxOCB3YXJuaW5ncyAodXNlIHdhcm5pbmdzKCkgdG8gc2VlIHRoZW0pXG4ifQ== -->
-<pre><code>There were 18 warnings (use warnings() to see them)</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 </div>
 </div>
