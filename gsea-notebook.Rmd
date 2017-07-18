@@ -315,6 +315,8 @@ aflatoxin_B1_2d_run1_plate1_class
 
 + The list that contains all text files data was saved to the working directory to serve as a temporary start point while working through the rest of the process so that importing values from text files can be avoided. The result is an R object with the size of 1.1 GB.
 
++ Changed the path to save temporary object so that the objects are saved in a subdirectory temp_obj withing working directory.
+
 + Convert the headers into one line of text files that would be the second line of the class files.
 
 + 

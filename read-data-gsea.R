@@ -18,8 +18,8 @@ file.remove(new_names)
 for(i in 1:length(temp)){
     temp_obj <- object_names[i]
     assign(temp_obj, as.data.frame(temp[i])[-2,])
-    save(temp_obj, file = paste(object_names[i], ".rda", sep = ""))
-    write.table(get(temp_obj), file = paste(object_names[i], ".txt", sep = ""), sep = "\t", row.names = FALSE, col.names = FALSE)
+    save(temp_obj, file = paste("C:/users/chious/R-working/gsea/temp_obj/", object_names[i], ".rda", sep = ""))
+    write.table(get(temp_obj), file = paste("C:/users/chious/R-working/gsea/temp_obj/", object_names[i], ".txt", sep = ""), sep = "\t", row.names = FALSE, col.names = FALSE)
 }
 class_names <- paste(object_names, "_class", sep = "")
 for(j in 1:length(temp)){
