@@ -252,16 +252,7 @@ aflatoxin_B1_2d_run1_plate1_class
 
 + The object was extracted properly. However, the first column is not needed. The loop needs to be revised.
 
-#### Revised loop-1
-+ Exclude the first column. object j and class objects were removed from the console prior to run the following chunk.
-```{r}
-class_names <- paste(object_names, "_class", sep = "")
-for(j in 1:length(temp)){
-    class_obj <- class_names[j]
-    assign(class_obj, as.data.frame(temp[j])[2,-1])
-}
-aflatoxin_B1_2d_run1_plate1_class
-```
+
 
 
 #### Revised loop-2
@@ -317,15 +308,15 @@ for(j in 1:length(temp)){
 aflatoxin_B1_2d_run1_plate1_class
 ```
 
-#### Revised loop-6
+## 7/18/2017
 
-```{r}
-class_names <- paste(object_names, "_class", sep = "")
-for(j in 1:length(temp)){
-    class_obj <- class_names[j]
-    assign(class_obj, as.vector(as.data.frame(temp[j])[2,-1]))
-}
-aflatoxin_B1_2d_run1_plate1_class
 
-```
+### Attempt to create class files
+
++ The list that contains all text files data was saved to the working directory to serve as a temporary start point while working through the rest of the process so that importing values from text files can be avoided. The result is an R object with the size of 1.1 GB.
+
++ Convert the headers into one line of text files that would be the second line of the class files.
+
++ 
+
 
